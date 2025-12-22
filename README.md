@@ -1,17 +1,18 @@
 # habit_traker
 
-A new Flutter project.
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
+ Проект для отслеживания привычек.
+ Каждая задача/привычка хранится в **SQLite**.
+ Экран со списком задач обновляется **через Stream**: любое изменение — сразу видно.
+
+ #### **Планируемые Функции:**
+- Добавить задачу.
+- Отметить задачу выполненной.
+- Фильтр: все / выполненные / невыполненные.
+- (Чуть сложнее) прогресс по привычке: нажал кнопку — +1 к прогрессу → обновление через Stream.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 # habit_traker
