@@ -16,8 +16,7 @@ class Week {
     required this.sun,
   });
 
-  //метод toMap
-  //Этот метод нужен, чтобы подготовить данные к сохранению в БД SQLite.
+  //Этот метод нужен, чтобы подготовить данные к сохранению в БД
   Map<String, dynamic> toMap({required int habitId}) {
     return {
       'habit_id': habitId,
@@ -31,6 +30,7 @@ class Week {
     };
   }
 
+  // Этот метод берёт map, пришедший из БД (Map<String, dynamic>), и создаёт из него объект Week.
   factory Week.fromMap(Map<String, dynamic> map) {
     return Week(
       mon: map['mon'] == null ? null : (map['mon'] as int) == 1,
