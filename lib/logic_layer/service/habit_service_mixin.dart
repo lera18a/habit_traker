@@ -6,5 +6,5 @@ mixin HabitServiceMixin {
   Stream<List<Habit>> get habitsStream;
   Future<void> toggleHabitComplete(bool complete, Habit habit);
   Future<void> loadHabitsAndPush();
+  void dispose();
 }
-//пользуюсь репозиторием

@@ -27,7 +27,7 @@ class HabitService with HabitServiceMixin {
 
   @override
   Future<void> loadHabitsAndPush() async {
-    final habits = await repository.readHabit.first;
+    final habits = await repository.readHabit;
     habitContrroller.add(habits);
   }
 
@@ -36,6 +36,7 @@ class HabitService with HabitServiceMixin {
     await loadHabitsAndPush();
   }
 
+  @override
   void dispose() {
     habitContrroller.close();
   }
