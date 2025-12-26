@@ -11,6 +11,22 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [CreateHabitScreen]
+class CreateHabitRoute extends PageRouteInfo<void> {
+  const CreateHabitRoute({List<PageRouteInfo>? children})
+    : super(CreateHabitRoute.name, initialChildren: children);
+
+  static const String name = 'CreateHabitRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreateHabitScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ProgressScreen]
 class ProgressRoute extends PageRouteInfo<void> {
   const ProgressRoute({List<PageRouteInfo>? children})

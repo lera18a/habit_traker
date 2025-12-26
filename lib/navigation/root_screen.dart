@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:habit_traker/navigation/app_router.dart';
+import 'package:habit_traker/widget/bloc/bloc_habit_create.dart';
 
 @RoutePage()
 class RootScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class RootScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: const [TodayRoute(), ProgressRoute(), SettingsRoute()],
+      floatingActionButton: const BlocHabitCreate(),
       bottomNavigationBuilder: ((_, tabsRouter) {
         return BottomNavigationBar(
           currentIndex: tabsRouter.activeIndex,
