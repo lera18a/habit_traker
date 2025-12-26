@@ -1,6 +1,5 @@
 part of 'habit_bloc.dart';
 
-@immutable
 sealed class HabitEvent {}
 
 final class HabitStartListenEvent extends HabitEvent {}
@@ -21,21 +20,21 @@ final class HabitStreamErrorEvent extends HabitEvent {
 }
 
 /// Пользовательские интенты
-final class HabitCreateHabitEvent extends HabitEvent {
+final class HabitCreateEvent extends HabitEvent {
   final Habit habit;
 
-  HabitCreateHabitEvent({required this.habit});
+  HabitCreateEvent({required this.habit});
 }
 
-final class HabitDeleteHabiEvent extends HabitEvent {
+final class HabitDeleteEvent extends HabitEvent {
   final Habit habit;
 
-  HabitDeleteHabiEvent({required this.habit});
+  HabitDeleteEvent({required this.habit});
 }
 
-final class HabitToggleHabitCompleteEvent extends HabitEvent {
+final class HabitToggleCompleteEvent extends HabitEvent {
   final Habit habit;
   final bool complete;
 
-  HabitToggleHabitCompleteEvent({required this.habit, required this.complete});
+  HabitToggleCompleteEvent({required this.habit, required this.complete});
 }

@@ -2,22 +2,25 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:habit_traker/data_layer/models/habit.dart';
-import 'package:habit_traker/logic_layer/service/habit_service.dart';
+import 'package:habit_traker/logic_layer/service/habit_service_mixin.dart';
 
 part 'habit_event.dart';
 part 'habit_state.dart';
 
 class HabitBloc extends Bloc<HabitEvent, HabitState> {
-  final HabitService _habitService;
+  final HabitServiceMixin habitService;
   StreamSubscription<List<Habit>>? _subscription;
-  HabitBloc(this._habitService) : super(HabitLoadingState()) {
+  HabitBloc({required this.habitService}) : super(HabitLoadingState()) {
     on<HabitStartListenEvent>(_onHabitStartListenEvent);
     on<HabitStreamUpdatedEvent>(_onHabitStreamUpdatedEvent);
     on<HabitStreamErrorEvent>(_onHabitStreamErrorEvent);
-    on<HabitCreateHabitEvent>(_onHabitCreateHabitEvent);
-    on<HabitDeleteHabiEvent>(_onHabitDeleteHabiEvent);
-    on<HabitToggleHabitCompleteEvent>(_onHabitToggleHabitCompleteEvent);
+    on<HabitCreateEvent>(_onHabitCreateHabitEvent);
+    on<HabitDeleteEvent>(_onHabitDeleteHabiEvent);
+    on<HabitToggleCompleteEvent>(_onHabitToggleHabitCompleteEvent);
+
+    add(HabitStartListenEvent());
   }
+  // add(HabitStartListenEvent);
 
   /// Запуск подписки на стрим сервиса
   Future<void> _onHabitStartListenEvent(
@@ -27,7 +30,7 @@ class HabitBloc extends Bloc<HabitEvent, HabitState> {
     emit(HabitLoadingState());
 
     // Подписываемся на поток привычек
-    _subscription = _habitService.habitsStream.listen(
+    _subscription = habitService.habitsStream.listen(
       (habits) {
         add(HabitStreamUpdatedEvent(habits: habits));
       },
@@ -38,7 +41,7 @@ class HabitBloc extends Bloc<HabitEvent, HabitState> {
 
     // Первичная загрузка
     try {
-      await _habitService.loadHabitsAndPush();
+      await habitService.loadHabitsAndPush();
     } catch (e) {
       emit(HabitLoadingFailedState(message: e.toString()));
     }
@@ -59,31 +62,31 @@ class HabitBloc extends Bloc<HabitEvent, HabitState> {
   }
 
   Future<void> _onHabitCreateHabitEvent(
-    HabitCreateHabitEvent event,
+    HabitCreateEvent event,
     Emitter<HabitState> emit,
   ) async {
-    await _habitService.createHabit(event.habit);
+    await habitService.createHabit(event.habit);
     // поток сам обновится → придёт TodayStreamUpdated
   }
 
   Future<void> _onHabitDeleteHabiEvent(
-    HabitDeleteHabiEvent event,
+    HabitDeleteEvent event,
     Emitter<HabitState> emit,
   ) async {
-    await _habitService.deleteHabit(event.habit);
+    await habitService.deleteHabit(event.habit);
   }
 
   Future<void> _onHabitToggleHabitCompleteEvent(
-    HabitToggleHabitCompleteEvent event,
+    HabitToggleCompleteEvent event,
     Emitter<HabitState> emit,
   ) async {
-    await _habitService.toggleHabitComplete(event.complete, event.habit);
+    await habitService.toggleHabitComplete(event.complete, event.habit);
   }
 
   @override
   Future<void> close() {
     _subscription?.cancel();
-    _habitService.dispose();
+    habitService.dispose();
     return super.close();
   }
 }
